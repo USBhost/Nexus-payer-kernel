@@ -74,8 +74,10 @@ else
                 $(call cc-option,-march=core2,$(call cc-option,-mtune=generic))
 	cflags-$(CONFIG_MATOM) += $(call cc-option,-march=atom) \
 		$(call cc-option,-mtune=atom,$(call cc-option,-mtune=generic))
-        cflags-$(CONFIG_MSLM) += $(call cc-option,-march=slm) \
-                $(call cc-option,-mtune=slm,$(call cc-option,-mtune=generic))
+        cflags-$(CONFIG_MSLM) += -march=slm -mtune=slm \
+		--param l1-cache-line-size=64 \
+		--param l1-cache-size=32 \
+		--param l2-cache-size=1024 
         cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=generic)
         KBUILD_CFLAGS += $(cflags-y)
 
