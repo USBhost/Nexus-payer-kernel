@@ -109,16 +109,3 @@ void mmc_fixup_device(struct mmc_card *card, const struct mmc_fixup *table)
 	}
 }
 EXPORT_SYMBOL(mmc_fixup_device);
-
-void dis_cache_mmc(struct mmc_card *card, int data)
-{
-	if (mmc_card_mmc(card)) {
-		mmc_claim_host(card->host);
-		pr_warn("%s: enther dis_cache_mmc.\n",
-			mmc_hostname(card->host));
-		mmc_cache_ctrl(card->host, 0);
-		card->host->caps2 &= ~MMC_CAP2_CACHE_CTRL;
-		mmc_release_host(card->host);
-	}
-}
-EXPORT_SYMBOL(dis_cache_mmc);
